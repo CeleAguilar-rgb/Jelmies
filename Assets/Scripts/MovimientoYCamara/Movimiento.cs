@@ -1,18 +1,40 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class Movimiento : MonoBehaviour
 {
     public float velocidad = 5f;
     public float velocidadRotacion = 10f;
-    public Transform camara;
 
     private ControlJugador controls;
     private Vector2 inputMovimiento;
+
+    public CinemachineCamera camera1;
+    public CinemachineCamera camera2;
+    private bool usandoCamara1 = true;
+    public Camera mainCamera;
+
 
     private void Awake()
     {
         controls = new ControlJugador();
     }
+
+    private void CambiarCamara()
+{
+    usandoCamara1 = !usandoCamara1;
+
+    if (usandoCamara1)
+    {
+        camera1.Priority = 10;
+        camera2.Priority = 0;
+    }
+    else
+    {
+        camera1.Priority = 0;
+        camera2.Priority = 10;
+    }
+}
 
     private void OnEnable()
     {
@@ -28,9 +50,14 @@ public class Movimiento : MonoBehaviour
     {
         inputMovimiento = controls.Jugador.Mover.ReadValue<Vector2>();
 
-        Vector3 forward = camara.forward;
-        Vector3 right = camara.right;
+        if (controls.Jugador.CambiarCamara.WasPressedThisFrame())
+        {
+            CambiarCamara();
+        }
 
+
+        Vector3 forward = mainCamera.transform.forward;
+        Vector3 right = mainCamera.transform.right;
         forward.y = 0;
         right.y = 0;
 
