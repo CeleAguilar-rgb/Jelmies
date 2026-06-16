@@ -109,6 +109,15 @@ public partial class @ControlJugador: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e3e0612-8e6d-4e75-a83b-919672816405"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,6 +186,17 @@ public partial class @ControlJugador: IInputActionCollection2, IDisposable
                     ""action"": ""CambiarCamara"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43101d17-b61c-4221-971c-8cff56618e0a"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,6 +207,7 @@ public partial class @ControlJugador: IInputActionCollection2, IDisposable
         m_Jugador = asset.FindActionMap("Jugador", throwIfNotFound: true);
         m_Jugador_Mover = m_Jugador.FindAction("Mover", throwIfNotFound: true);
         m_Jugador_CambiarCamara = m_Jugador.FindAction("CambiarCamara", throwIfNotFound: true);
+        m_Jugador_Dash = m_Jugador.FindAction("Dash", throwIfNotFound: true);
     }
 
     ~@ControlJugador()
@@ -269,6 +290,7 @@ public partial class @ControlJugador: IInputActionCollection2, IDisposable
     private List<IJugadorActions> m_JugadorActionsCallbackInterfaces = new List<IJugadorActions>();
     private readonly InputAction m_Jugador_Mover;
     private readonly InputAction m_Jugador_CambiarCamara;
+    private readonly InputAction m_Jugador_Dash;
     /// <summary>
     /// Provides access to input actions defined in input action map "Jugador".
     /// </summary>
@@ -288,6 +310,10 @@ public partial class @ControlJugador: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Jugador/CambiarCamara".
         /// </summary>
         public InputAction @CambiarCamara => m_Wrapper.m_Jugador_CambiarCamara;
+        /// <summary>
+        /// Provides access to the underlying input action "Jugador/Dash".
+        /// </summary>
+        public InputAction @Dash => m_Wrapper.m_Jugador_Dash;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -320,6 +346,9 @@ public partial class @ControlJugador: IInputActionCollection2, IDisposable
             @CambiarCamara.started += instance.OnCambiarCamara;
             @CambiarCamara.performed += instance.OnCambiarCamara;
             @CambiarCamara.canceled += instance.OnCambiarCamara;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         /// <summary>
@@ -337,6 +366,9 @@ public partial class @ControlJugador: IInputActionCollection2, IDisposable
             @CambiarCamara.started -= instance.OnCambiarCamara;
             @CambiarCamara.performed -= instance.OnCambiarCamara;
             @CambiarCamara.canceled -= instance.OnCambiarCamara;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         /// <summary>
@@ -391,5 +423,12 @@ public partial class @ControlJugador: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCambiarCamara(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDash(InputAction.CallbackContext context);
     }
 }
